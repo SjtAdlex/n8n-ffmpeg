@@ -1,7 +1,15 @@
-FROM n8nio/n8n
+FROM node:18-bullseye
 
-USER root
+# install ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg
 
-RUN apk update && apk add ffmpeg
+# install n8n
+RUN npm install -g n8n
 
+# create n8n user
+RUN useradd -m node
 USER node
+
+EXPOSE 5678
+
+CMD ["n8n"]
